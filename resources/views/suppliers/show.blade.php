@@ -22,7 +22,6 @@
                     </div>
                     <div class="flex justify-end space-x-2">
                         <a href="{{ route('suppliers.index') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('Back') }}</a>
-                        <a href="{{ route('suppliers.edit', $supplier->id) }}" class="bg-blue-500 text-white px-4 py-2 rounded-md">{{ __('Edit Supplier') }}</a>
                     </div>
                 </div>
             </div>

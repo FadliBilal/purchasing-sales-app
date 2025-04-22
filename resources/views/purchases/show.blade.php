@@ -46,10 +46,6 @@
                            class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded shadow">
                             {{ __('Kembali') }}
                         </a>
-                        <a href="{{ route('purchases.edit',$purchase->id) }}"
-                           class="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded shadow">
-                            {{ __('Edit') }}
-                        </a>
                     </div>
                 </div>
             </div>
