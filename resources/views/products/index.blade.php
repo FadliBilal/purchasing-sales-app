@@ -14,11 +14,15 @@
                 </div>
             @endif
 
-            <div class="flex justify-end mb-4">
-                <a href="{{ route('products.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
-                    + Tambah Produk
-                </a>
-            </div>
+            {{-- Create button hanya untuk super_admin --}}
+            @if(auth()->user()->role === 'super_admin')
+                <div class="flex justify-end mb-4">
+                    <a href="{{ route('products.create') }}"
+                       class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
+                        + Tambah Produk
+                    </a>
+                </div>
+            @endif
 
             <div class="bg-white dark:bg-gray-800 shadow-sm sm:rounded-lg p-6 overflow-x-auto">
                 <table class="w-full table-auto text-sm text-left text-gray-800 dark:text-gray-100">
@@ -40,25 +44,43 @@
                                 <td class="py-2 px-4">{{ $product->supplier->name_supplier ?? '-' }}</td>
                                 <td class="py-2 px-4">
                                     <div class="flex justify-center space-x-2">
-                                        <a href="{{ route('products.show',$product->id) }}" class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs shadow">Details</a>
-                                        <a href="{{ route('products.edit',$product->id) }}" class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs shadow">Edit</a>
-                                        <form action="{{ route('products.destroy',$product->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus produk ini?')" class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs shadow">Hapus</button>
-                                        </form>
+                                        {{-- Details selalu muncul --}}
+                                        <a href="{{ route('products.show', $product->id) }}"
+                                           class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs shadow">
+                                            Details
+                                        </a>
+
+                                        {{-- Edit & Hapus hanya untuk super_admin --}}
+                                        @if(auth()->user()->role === 'super_admin')
+                                            <a href="{{ route('products.edit', $product->id) }}"
+                                               class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs shadow">
+                                                Edit
+                                            </a>
+                                            <form action="{{ route('products.destroy', $product->id) }}"
+                                                  method="POST"
+                                                  onsubmit="return confirm('Yakin ingin menghapus produk ini?')"
+                                                  class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                        class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs shadow">
+                                                    Hapus
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="text-center py-4 text-gray-400">Belum ada data produk.</td>
+                                <td colspan="5" class="text-center py-4 text-gray-400">
+                                    Belum ada data produk.
+                                </td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
             </div>
-
         </div>
     </div>
 </x-app-layout>

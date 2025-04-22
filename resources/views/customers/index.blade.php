@@ -14,11 +14,15 @@
                 </div>
             @endif
 
-            <div class="flex justify-end mb-4">
-                <a href="{{ route('customers.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
-                    + Tambah Customer
-                </a>
-            </div>
+            {{-- Create button hanya untuk super_admin --}}
+            @if(auth()->user()->role === 'super_admin')
+                <div class="flex justify-end mb-4">
+                    <a href="{{ route('customers.create') }}"
+                       class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded shadow">
+                        + Tambah Customer
+                    </a>
+                </div>
+            @endif
 
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6 overflow-x-auto">
                 <table class="w-full table-auto text-sm text-left text-gray-800 dark:text-gray-100">
@@ -38,24 +42,30 @@
                                 <td class="py-2 px-4">{{ $customer->address }}</td>
                                 <td class="py-2 px-4">
                                     <div class="flex justify-center space-x-2">
-                                        <a href="{{ route('customers.show',$customer->id) }}"
+                                        {{-- Details selalu muncul --}}
+                                        <a href="{{ route('customers.show', $customer->id) }}"
                                            class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-xs shadow">
                                             Details
                                         </a>
-                                        <a href="{{ route('customers.edit',$customer->id) }}"
-                                           class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs shadow">
-                                            Edit
-                                        </a>
-                                        <form action="{{ route('customers.destroy',$customer->id) }}" method="POST"
-                                              onsubmit="return confirm('Yakin ingin menghapus customer ini?')"
-                                              class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                    class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs shadow">
-                                                Hapus
-                                            </button>
-                                        </form>
+
+                                        {{-- Edit & Hapus hanya untuk super_admin --}}
+                                        @if(auth()->user()->role === 'super_admin')
+                                            <a href="{{ route('customers.edit', $customer->id) }}"
+                                               class="bg-yellow-500 hover:bg-yellow-600 text-white px-3 py-1 rounded text-xs shadow">
+                                                Edit
+                                            </a>
+                                            <form action="{{ route('customers.destroy', $customer->id) }}"
+                                                  method="POST"
+                                                  onsubmit="return confirm('Yakin ingin menghapus customer ini?')"
+                                                  class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                        class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-xs shadow">
+                                                    Hapus
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

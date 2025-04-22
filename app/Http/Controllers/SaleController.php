@@ -147,8 +147,7 @@ class SaleController extends Controller
             }
         });
 
-        return redirect()->route('sales.index')
-                         ->with('success', 'Data penjualan berhasil diperbarui!');
+        return redirect()->route('sales.index')->with('success', 'Data penjualan berhasil diperbarui!');
     }
 
     public function destroy(Sale $sale)
@@ -159,7 +158,6 @@ class SaleController extends Controller
             $sale->delete();
         });
 
-        return redirect()->route('sales.index')
-                         ->with('success', 'Data penjualan berhasil dihapus!');
+        return redirect()->route('sales.index')->with('success', 'Data penjualan berhasil dihapus!');
     }
 }
