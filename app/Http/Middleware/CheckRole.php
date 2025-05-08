@@ -19,12 +19,10 @@ class CheckRole
      */
     public function handle(Request $request, Closure $next, ...$roles): Response
     {
-        // Pastikan user sudah login
         if (! Auth::check()) {
             abort(403, 'Unauthorized');
         }
 
-        // Periksa apakah role user masuk dalam daftar yang diizinkan
         if (! in_array(Auth::user()->role, $roles)) {
             abort(403, 'Unauthorized');
         }

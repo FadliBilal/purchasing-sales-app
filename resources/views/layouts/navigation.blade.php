@@ -14,7 +14,6 @@
 
                 <!-- Navigation Links (desktop) -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <!-- Dashboard Link (semua role) -->
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
@@ -35,6 +34,12 @@
                         <x-nav-link :href="route('sales.index')" :active="request()->routeIs('sales.*')">
                             {{ __('Sales') }}
                         </x-nav-link>
+
+                        @if($role == 'super_admin' || $role == 'admin')
+                            <x-nav-link :href="route('report.index')" :active="request()->routeIs('report.*')">
+                                {{ __('Reports') }}
+                            </x-nav-link>
+                        @endif
                     @endif
                 </div>
             </div>
@@ -86,7 +91,7 @@
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu (mobile) -->
+    <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': !open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
@@ -109,6 +114,12 @@
                 <x-responsive-nav-link :href="route('sales.index')" :active="request()->routeIs('sales.*')">
                     {{ __('Sales') }}
                 </x-responsive-nav-link>
+
+                @if($role == 'super_admin' || $role == 'admin')
+                    <x-responsive-nav-link :href="route('report.index')" :active="request()->routeIs('report.*')">
+                        {{ __('Reports') }}
+                    </x-responsive-nav-link>
+                @endif
             @endif
         </div>
 
